@@ -65,17 +65,18 @@ class CategoryGrid extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16), // 角丸
                     border: Border.all(
                       width: 1,
+                      color: Theme.of(context).colorScheme.outline,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     blurRadius: 8,
+                    //     offset: const Offset(0, 4),
+                    //   ),
+                    // ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
