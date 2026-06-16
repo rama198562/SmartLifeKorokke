@@ -8,7 +8,7 @@ class GeminiService {
     if (apiKey.isEmpty) return null;
 
     final model = GenerativeModel(
-      model: 'gemini-3.5-flash', // あなたが見つけた大正解のモデル
+      model: 'gemini-3.5-flash',
       apiKey: apiKey,
       generationConfig: GenerationConfig(responseMimeType: 'application/json'),
     );
