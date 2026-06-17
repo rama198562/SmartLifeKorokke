@@ -34,7 +34,7 @@ class DetailsScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      const MarkerLayer(
+                      MarkerLayer(
                         markers: [
                           Marker(
                               width: 30.0,
@@ -42,7 +42,7 @@ class DetailsScreen extends StatelessWidget {
                               point: LatLng(35.025438, 135.958355), 
                               child: Icon(
                                 Icons.location_on,
-                                color: Colors.red,
+                                color: Theme.of(context).colorScheme.secondary,
 
                                 size: 50,
                               ),
@@ -60,7 +60,7 @@ class DetailsScreen extends StatelessWidget {
                                 const LatLng(35.024083, 135.955220),
                             ],
                             strokeWidth: 3.0,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                       ],
                     ),
