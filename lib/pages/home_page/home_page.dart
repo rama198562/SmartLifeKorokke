@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hop_navi/widgets/category_grid.dart'; // context.pushを使うために必要
+import 'package:hop_navi/pages/home_page/widgets/category_grid.dart'; // context.pushを使うために必要
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
