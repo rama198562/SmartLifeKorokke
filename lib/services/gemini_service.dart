@@ -8,11 +8,11 @@ class GeminiService {
       "description": "公園を経由するルート",
       "spots": [
         {
-          "name": "○○公園",
+          "name": "sample公園",
           "type": "park"
         },
         {
-          "name": "△△神社",
+          "name": "sample神社",
           "type": "landmark"
         }
       ]
