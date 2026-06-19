@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hop_navi/theme/theme.dart';
+import 'package:hop_navi/theme/util.dart';
 import 'router.dart'; 
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,10 +18,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = createTextTheme(context, "Zen Maru Gothic", "Zen Maru Gothic");
+    MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp.router(
       routerConfig: myRouter,
       title: 'Hackathon App',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: theme.light(),
+      themeMode: .light,
     );
   }
 }

@@ -116,19 +116,20 @@ class _CategoryGridState extends State<CategoryGrid> {
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   // ⑥ 選択されている時は枠線の色や太さを変えて「選んでる感」を出す！
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: isSelected ? Colors.blue : Colors.black, // 選ばれてたら青枠
                     width: isSelected ? 2.5 : 1,                   // 選ばれてたら太く
+                    color: Theme.of(context).colorScheme.outline,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+                    // boxShadow: [
+                  //   BoxShadow(
+                  //     blurRadius: 8,
+                  //     offset: const Offset(0, 4),
                       color: isSelected ? Colors.blue.withOpacity(0.2) : Colors.black.withOpacity(0.1),
-                    ),
-                  ],
+                  //   ),
+                  // ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import '../models/route_model.dart'; // インポートを一番上にまとめました
 
 class GeminiService {
-  // 外部からユーザーの要望を受け取って、解析結果のJSON（Map型）を返す関数
+  // === 【あなた（繋ぎ役）が作った関数】 ===
   Future<Map<String, dynamic>?> fetchRoutePreferences(String userRequest) async {
     final apiKey = String.fromEnvironment('GEMINI_API_KEY'); 
     if (apiKey.isEmpty) return null;
@@ -35,5 +36,25 @@ class GeminiService {
       print('Gemini通信エラー: $e');
     }
     return null;
+  } // ← ここで綺麗にあなたの関数とクラスを閉じられるように整理しました
+
+  // === 【Gemini担当の人が作った最新の関数】 ===
+  Future<RouteModel> generateRoute() async {
+    final json = {
+      "routeName": "公園散歩ルート",
+      "description": "公園を経由するルート",
+      "spots": [
+        {
+          "name": "sample公園",
+          "type": "park"
+        },
+        {
+          "name": "sample神社",
+          "type": "landmark"
+        }
+      ]
+    };
+
+    return RouteModel.fromJson(json);
   }
 }
