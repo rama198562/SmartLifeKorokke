@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hop_navi/providers/category_grid_provider.dart';
 
-class CategoryGrid extends StatelessWidget {
+class CategoryGrid extends ConsumerWidget {
   const CategoryGrid({super.key});
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCategory = ref.watch(categoryGridProvider);
     //データ定義
     final List<Map<String, dynamic>> categories = [
       {
         'title':'公園',
+        'id':'peak', 
       },
       {
         'title':'コンビニ',
+        'id':'convenience',
       },
       {
         'title':'カフェ',
+        'id':'cafe',
       },
       {
         'title':'病院',
+        'id':'hospital',
       },
     ];
     return Column(
@@ -58,8 +64,11 @@ class CategoryGrid extends StatelessWidget {
             ),
             itemBuilder: (context, index){
               final item = categories[index];
+              final String id = item['id'];
+              final String title = item['title'];
               return GestureDetector(
                 onTap: (){
+                  ref.read(categoryGridProvider.notifier).toggleCategory(id);
                   print('${item['title']} がタップされました');
                 },
                 child: Container(
