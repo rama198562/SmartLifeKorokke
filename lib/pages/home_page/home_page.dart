@@ -10,7 +10,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ホーム画面')),
+      appBar: AppBar(
+        title: const Text(
+          'ルート設定',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -18,7 +25,9 @@ class HomeScreen extends StatelessWidget {
             children: [
           
               CategoryGrid(),
+              SizedBox(height: 24),  
               DistanceSlider(),
+              SizedBox(height: 24),  
               RouteGenerateButton(),
           
               SizedBox(height: 24),            

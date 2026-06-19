@@ -63,18 +63,22 @@ class CategoryGrid extends ConsumerWidget {
       {
         'title':'公園',
         'id':'peak', 
+        'icon': Icons.park,
       },
       {
         'title':'コンビニ',
         'id':'convenience',
+        'icon': Icons.storefront,
       },
       {
         'title':'カフェ',
         'id':'cafe',
+        'icon': Icons.local_cafe,
       },
       {
         'title':'病院',
         'id':'hospital',
+        'icon': Icons.local_hospital,
       },
     ];
     final selectedIds = ref.watch(categoryGridProvider);
@@ -86,7 +90,11 @@ class CategoryGrid extends ConsumerWidget {
           children: [
             const Text(
               'カテゴリーを選択',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              
             ),
             TextButton(
               onPressed: () {},
@@ -125,40 +133,74 @@ class CategoryGrid extends ConsumerWidget {
                 //   }
                 // });
               },
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.all(14.0),
                 decoration: BoxDecoration(
-                  // 💡 色のダブりを解消し、選択時はほんのり青くなるように修正
                   color: isSelected 
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline,
-                    width: isSelected ? 2.5 : 1,
+                    width: isSelected ? 2.5 : 1.5,
                   ),
+                  boxShadow: [
+                    if (!isSelected)
+                      BoxShadow(
+                        color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.2),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      item['title'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                        color: isSelected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: isSelected 
+                            ? Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.2)
+                            : Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        item['icon'],
+                        size: 24,
+                        color: isSelected 
+                            ? Theme.of(context).colorScheme.onPrimary 
+                            : Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    if (isSelected)
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary, size: 20),
-                      ),
-                  ],
+                    
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          item['title'],
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                            color: isSelected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        if (isSelected)
+                          Icon(
+                            Icons.check_circle, 
+                            color: Theme.of(context).colorScheme.primary, 
+                            size: 22,
+                          ),
+                      
+                      ]
+                    ),
+                  ]
                 ),
-              ),
+              )
             );
+            
           },
         ),
 
