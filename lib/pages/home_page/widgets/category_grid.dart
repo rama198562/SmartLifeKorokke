@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/gemini_service.dart';
+import '../../../services/gemini_service.dart'; // 💡 パス（住所）を正しい位置に修正！
 
 // ① 複数選択の状態を管理するため、StatefulWidgetに変更
 class CategoryGrid extends StatefulWidget {
@@ -38,7 +38,6 @@ class _CategoryGridState extends State<CategoryGrid> {
     });
 
     // 💡 選ばれた項目を「、」で繋いでプロンプト（userRequest）にする
-    // 例: "公園、カフェ" -> "公園、カフェに立ち寄るお散歩ルートを提案してください。"
     final userRequest = "${selectedTitles.join('、')}に立ち寄るお散歩ルートを提案してください。";
     print('Geminiへのリクエスト: $userRequest');
 
@@ -56,7 +55,7 @@ class _CategoryGridState extends State<CategoryGrid> {
       
       // 🚀 【次のステップ】ここで地図API（Google Maps等）の画面に result を渡して画面遷移する
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('ルート解析成功: ${result['keywords']}')),
+        SnackBar(content: Text('ルート解析成功: ${result['keywords'] ?? '完了'}')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -115,21 +114,15 @@ class _CategoryGridState extends State<CategoryGrid> {
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  // ⑥ 選択されている時は枠線の色や太さを変えて「選んでる感」を出す！
-                  color: Theme.of(context).colorScheme.surface,
+                  // 💡 色のダブりを解消し、選択時はほんのり青くなるように修正
+                  color: isSelected 
+                      ? Colors.blue.withOpacity(0.1) 
+                      : Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isSelected ? Colors.blue : Colors.black, // 選ばれてたら青枠
-                    width: isSelected ? 2.5 : 1,                   // 選ばれてたら太く
-                    color: Theme.of(context).colorScheme.outline,
+                    color: isSelected ? Colors.blue : Theme.of(context).colorScheme.outline,
+                    width: isSelected ? 2.5 : 1,
                   ),
-                    // boxShadow: [
-                  //   BoxShadow(
-                  //     blurRadius: 8,
-                  //     offset: const Offset(0, 4),
-                      color: isSelected ? Colors.blue.withOpacity(0.2) : Colors.black.withOpacity(0.1),
-                  //   ),
-                  // ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,11 +132,10 @@ class _CategoryGridState extends State<CategoryGrid> {
                       item['title'],
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, // 太字に
-                        color: isSelected ? Colors.blue : Colors.black,             // 文字も青に
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        color: isSelected ? Colors.blue : Colors.black,
                       ),
                     ),
-                    // 右下にチェックマークアイコンを出す（お好みで）
                     if (isSelected)
                       const Align(
                         alignment: Alignment.bottomRight,
@@ -170,7 +162,7 @@ class _CategoryGridState extends State<CategoryGrid> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
             child: isLoading
-                ? const CircularProgressIndicator(color: Colors.white) // 通信中はぐるぐる
+                ? const CircularProgressIndicator(color: Colors.white)
                 : const Text('この条件でお散歩ルートを作る', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
         ),
