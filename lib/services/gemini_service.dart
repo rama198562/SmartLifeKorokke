@@ -119,12 +119,13 @@
 // }
 
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import '../models/route_model.dart'; 
 
 class GeminiService {
   Future<RouteModel?> generateRouteFromGemini(List<String> selectedCategories) async {
-    final apiKey = const String.fromEnvironment('GEMINI_API_KEY'); 
+    final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
     if (apiKey.isEmpty) {
       print('エラー: GEMINI_API_KEYが設定されていません');
       return null;

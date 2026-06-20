@@ -6,6 +6,7 @@ import 'package:hop_navi/theme/util.dart';
 import 'router.dart'; 
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   runApp(
     const ProviderScope(
