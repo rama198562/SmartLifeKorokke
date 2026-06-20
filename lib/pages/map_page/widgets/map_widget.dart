@@ -43,13 +43,13 @@ import 'package:hop_navi/providers/map_location_provider.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:hop_navi/models/route_model.dart'; // 👈 1. モデルをインポート
 
-class MapWidget extends StatelessWidget {
+class MapWidget extends ConsumerWidget  {
   final RouteModel? routeModel; // 👈 2. データを受け取る変数を追加
 
   // 👈 3. コンストラクタを修正して routeModel を受け取れるようにする
   const MapWidget({super.key, this.routeModel});
-class MapWidget extends ConsumerWidget {
-  const MapWidget({super.key});
+
+  // const MapWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
@@ -80,7 +80,7 @@ class MapWidget extends ConsumerWidget {
           ),
         ),
         // 💡 4. 下位のレイヤーに routeModel を引き渡す！
-        LocationLayer(routeModel: routeModel),
+        // LocationLayer(routeModel: routeModel),
         MaprouteLayer(routeModel: routeModel),
         LocationLayer(currentLocation: currentLocation),
         MaprouteLayer(),
