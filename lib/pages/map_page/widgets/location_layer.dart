@@ -28,6 +28,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:hop_navi/widgets/current_location.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:hop_navi/models/route_model.dart'; // 👈 RouteModelをインポート
 
@@ -35,6 +36,13 @@ class LocationLayer extends StatelessWidget {
   final RouteModel? routeModel; // 👈 データを受け取る
 
   const LocationLayer({super.key, this.routeModel});
+  final LatLng currentLocation;
+
+  const LocationLayer({
+    super.key, 
+    required this.currentLocation,
+  });
+  // const LocationLayer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +66,13 @@ class LocationLayer extends StatelessWidget {
             point: LatLng(spot.latitude, spot.longitude),
             child: Icon(
               Icons.location_on,
-              color: Theme.of(context).colorScheme.secondary,
-              size: 40,
+              color: Theme.of(context).colorScheme.primary,
+              size: 50,
             ),
-          ),
-        );
-      }
-    }
-
-    return MarkerLayer(markers: markers);
+          rotate: true,
+        ),
+        currentLocationMarker(context, currentLocation),
+      ],
+    );
   }
 }
