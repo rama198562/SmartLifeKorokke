@@ -16,7 +16,7 @@ class MapWidget extends ConsumerWidget {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('エラーが発生しました: $error')),
       data: (locationData) {
-        if (locationData == null) {
+        if (locationData == null|| locationData.latitude == null || locationData.longitude == null || locationData.latitude!.isNaN ) {
           return const Center(child: Text('位置情報が取得できませんでした。'));
         }
     final currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
