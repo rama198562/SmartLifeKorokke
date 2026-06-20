@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hop_navi/pages/map_page/widgets/location_layer.dart';
 import 'package:hop_navi/pages/map_page/widgets/maproute_layer.dart';
+import 'package:hop_navi/providers/map_location_provider.dart';
 import 'package:latlong2/latlong.dart';
 
-class MapWidget extends StatelessWidget {
+class MapWidget extends ConsumerWidget {
   const MapWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref){
+    final locationAsyncValue = ref.watch(locationProvider);
+    return locationAsyncValue.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('エラーが発生しました: $error')),
+      data: (locationData) {
+        if (locationData == null) {
+          return const Center(child: Text('位置情報が取得できませんでした。'));
+        }
+    final currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
     return FlutterMap(
       options: const MapOptions(
         // アル・プラザ草津(仮)
@@ -26,10 +37,10 @@ class MapWidget extends StatelessWidget {
             },
           ),
         ),
-        LocationLayer(),
+        LocationLayer(currentLocation: currentLocation),
         MaprouteLayer(),
 
       ],
     );
-  }
+  });}
 }
