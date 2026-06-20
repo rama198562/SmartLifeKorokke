@@ -35,12 +35,13 @@ import 'package:hop_navi/models/route_model.dart'; // 👈 RouteModelをイン�
 class LocationLayer extends StatelessWidget {
   final RouteModel? routeModel; // 👈 データを受け取る
 
-  const LocationLayer({super.key, this.routeModel});
+  // const LocationLayer({super.key, this.routeModel});
   final LatLng currentLocation;
 
   const LocationLayer({
     super.key, 
     required this.currentLocation,
+    this.routeModel,
   });
   // const LocationLayer({super.key});
 
@@ -54,6 +55,7 @@ class LocationLayer extends StatelessWidget {
         point: const LatLng(35.025438, 135.958355),
         child: const Icon(Icons.home, color: Colors.blue, size: 40),
       ),
+      currentLocationMarker(context, currentLocation),
     ];
 
     // 💡 Geminiが考えたスポットの数だけマーカーを追加する！
@@ -71,8 +73,14 @@ class LocationLayer extends StatelessWidget {
             ),
           rotate: true,
         ),
-        currentLocationMarker(context, currentLocation),
-      ],
+        
+        
+        
+        
     );
-  }
-}
+    
+  }}
+    return MarkerLayer(
+          markers: markers,
+        );
+}}
