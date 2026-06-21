@@ -30,15 +30,15 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 24),  
               RouteGenerateButton(),
           
-              SizedBox(height: 24),            
-              ElevatedButton(
+              // SizedBox(height: 24),            
+              // ElevatedButton(
           
-                onPressed: () {
-                  // マップ画面へ遷移
-                  context.push('/details');
-                },
-                child: const Text('マップに移行'),  //マップ画面を確認するためのテスト
-              ),
+              //   onPressed: () {
+              //     // マップ画面へ遷移
+              //     context.push('/details');
+              //   },
+              //   child: const Text('マップに移行'),  //マップ画面を確認するためのテスト
+              // ),
             ],
           ),
         ),
