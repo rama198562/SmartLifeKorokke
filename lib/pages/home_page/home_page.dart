@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hop_navi/pages/home_page/widgets/category_grid.dart';
 import 'package:hop_navi/pages/home_page/widgets/distance_slider.dart';
 import 'package:hop_navi/pages/home_page/widgets/route_generate_button.dart'; // context.pushを使うために必要

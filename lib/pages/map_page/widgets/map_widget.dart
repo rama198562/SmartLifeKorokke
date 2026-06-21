@@ -1,39 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:hop_navi/pages/map_page/widgets/location_layer.dart';
-// import 'package:hop_navi/pages/map_page/widgets/maproute_layer.dart';
-// import 'package:latlong2/latlong.dart';
-
-// class MapWidget extends StatelessWidget {
-//   const MapWidget({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return FlutterMap(
-//       options: const MapOptions(
-//         // アル・プラザ草津(仮)
-//         initialCenter: LatLng(35.025438, 135.958355),
-//         //初期ズーム
-//         initialZoom: 18.0,
-//       ),
-//       children: [
-//         TileLayer(  //openstreetmap
-//           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-//           userAgentPackageName: 'korokke.osanpo',
-//           tileProvider: NetworkTileProvider(
-//             headers: {
-//               'Referer': 'https://github.com/rama198562/SmartLifeKorokke',
-//             },
-//           ),
-//         ),
-//         LocationLayer(),
-//         MaprouteLayer(),
-
-//       ],
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,12 +5,12 @@ import 'package:hop_navi/pages/map_page/widgets/location_layer.dart';
 import 'package:hop_navi/pages/map_page/widgets/maproute_layer.dart';
 import 'package:hop_navi/providers/map_location_provider.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:hop_navi/models/route_model.dart'; // 👈 1. モデルをインポート
+import 'package:hop_navi/models/route_model.dart'; 
 
 class MapWidget extends ConsumerWidget  {
-  final RouteModel? routeModel; // 👈 2. データを受け取る変数を追加
+  final RouteModel? routeModel; // データを受け取る変数を追加
 
-  // 👈 3. コンストラクタを修正して routeModel を受け取れるようにする
+  // コンストラクタを修正して routeModel を受け取れるようにする
   const MapWidget({super.key, this.routeModel});
 
   // const MapWidget({super.key});
@@ -79,11 +43,10 @@ class MapWidget extends ConsumerWidget  {
             },
           ),
         ),
-        // 💡 4. 下位のレイヤーに routeModel を引き渡す！
         // LocationLayer(routeModel: routeModel),
-        MaprouteLayer(routeModel: routeModel),
+        // MaprouteLayer(routeModel: routeModel),
         LocationLayer(currentLocation: currentLocation),
-        MaprouteLayer(),
+        MaprouteLayer(currentLocation: currentLocation, routeModel: routeModel),
 
       ],
     );
