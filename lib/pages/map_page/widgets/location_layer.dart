@@ -49,12 +49,12 @@ class LocationLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     // 常に表示するスタート地点（アル・プラザ草津）のマーカー
     List<Marker> markers = [
-      Marker(
-        width: 40.0,
-        height: 40.0,
-        point: const LatLng(35.025438, 135.958355),
-        child: const Icon(Icons.home, color: Colors.blue, size: 40),
-      ),
+      // Marker(
+      //   width: 40.0,
+      //   height: 40.0,
+      //   point: const LatLng(35.025438, 135.958355),
+      //   child: const Icon(Icons.home, color: Colors.blue, size: 40),
+      // ),
       currentLocationMarker(context, currentLocation),
     ];
 
