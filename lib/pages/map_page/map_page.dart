@@ -54,22 +54,39 @@
 import 'package:flutter/material.dart';
 import 'package:hop_navi/pages/map_page/widgets/map_widget.dart';
 import 'package:hop_navi/models/route_model.dart'; // RouteModelのインポート
+import 'package:hop_navi/pages/map_page/widgets/waypoints_bottom_sheet.dart';
 
 class DetailsScreen extends StatelessWidget {
-  // 👈 修正: ?（ぬるぽ許可）をつけて、送られてこなくても大丈夫にする
   final RouteModel? routeModel; 
 
-  // 👈 修正: 必須（required）を外し、デフォルトで null にする
   const DetailsScreen({super.key, this.routeModel});
+
+  void _showWaypoints(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return WaypointsBottomSheet(routeModel: routeModel);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // 👈 追加: もし routeModel が空っぽ（ルーター経由で開かれた時など）なら、仮のタイトルを表示する
     final routeName = routeModel?.routeName ?? 'お散歩マップ';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(routeName), // 👈 決定したタイトルを表示
+        title: Text(routeName),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.list_alt),
+            tooltip: '経由地を確認',
+            onPressed: () => _showWaypoints(context),
+          ),
+        ],
       ), 
       body: Center(
         child: Column(

@@ -49,12 +49,12 @@ class LocationLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     // 常に表示するスタート地点（アル・プラザ草津）のマーカー
     List<Marker> markers = [
-      // Marker(
-      //   width: 40.0,
-      //   height: 40.0,
-      //   point: const LatLng(35.025438, 135.958355),
-      //   child: const Icon(Icons.home, color: Colors.blue, size: 40),
-      // ),
+      Marker(
+        width: 40.0,
+        height: 40.0,
+        point: const LatLng(35.025438, 135.958355),
+        child: const Icon(Icons.home, color: Colors.blue, size: 40),
+      ),
       currentLocationMarker(context, currentLocation),
     ];
 
@@ -66,21 +66,44 @@ class LocationLayer extends StatelessWidget {
             width: 40.0,
             height: 40.0,
             point: LatLng(spot.latitude, spot.longitude),
-            child: Icon(
-              Icons.location_on,
-              color: Theme.of(context).colorScheme.primary,
-              size: 50,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text(spot.name),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('種類: ${spot.type}'),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('閉じる'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Icon(
+                Icons.location_on,
+                color: Theme.of(context).colorScheme.primary,
+                size: 50,
+              ),
             ),
-          rotate: true,
-        ),
-        
-        
-        
-        
-    );
-    
-  }}
-    return MarkerLayer(
-          markers: markers,
+            rotate: true,
+          ),
         );
-}}
+      }
+    }
+    
+    return MarkerLayer(
+      markers: markers,
+    );
+  }
+}
