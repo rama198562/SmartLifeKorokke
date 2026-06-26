@@ -80,6 +80,11 @@ class CategoryGrid extends ConsumerWidget {
         'id':'hospital',
         'icon': Icons.local_hospital,
       },
+      {
+        'title':'a',
+        'id':'hospital',
+        'icon': Icons.local_hospital,
+      },
     ];
     final selectedIds = ref.watch(categoryGridProvider);
     return Column(
@@ -96,10 +101,10 @@ class CategoryGrid extends ConsumerWidget {
               ),
               
             ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('すべて見る', style: TextStyle(fontSize: 18)),
-            ),
+            // TextButton(
+            //   onPressed: () {},
+            //   child: const Text('すべて見る', style: TextStyle(fontSize: 18)),
+            // ),
           ],
         ),
         const SizedBox(height: 12),

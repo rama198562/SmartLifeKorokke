@@ -38,8 +38,8 @@ class DistanceSlider extends ConsumerWidget {
           child: Slider(
             value: value,
             min: 1,
-            max: 10,
-            divisions: 9,
+            max: 4,
+            divisions: 3,
             label: '${value.round().toString()}km',
             onChanged: ((value) {
               ref.read(distanceSliderProvider.notifier).upgradeDistance(value);
@@ -51,9 +51,8 @@ class DistanceSlider extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('1km', style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('5km', style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('10km', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('1km(15分)', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('4km(1時間)', style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
         ),
