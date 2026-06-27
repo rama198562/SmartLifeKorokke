@@ -26,9 +26,10 @@ class OrsApiService {
 
     final apiKey = dotenv.env['ORS_API_KEY'] ?? '';
     if (apiKey.isEmpty) return [];
-
-    final url = Uri.parse('https://api.openrouteservice.org/v2/directions/wheelchair/geojson');
-    
+    // 車椅子モード
+    // final url = Uri.parse('https://api.openrouteservice.org/v2/directions/wheelchair/geojson');
+    // 徒歩モード
+    final url = Uri.parse('https://api.openrouteservice.org/v2/directions/foot-walking/geojson');
     try {
       final response = await http.post(
         url,
@@ -38,9 +39,10 @@ class OrsApiService {
         },
         body: jsonEncode({
           "coordinates": coordinates,
-          "options": {
-            "avoid_features": ["steps"],
-          }
+          //階段除外ただし、距離によってうまく実行できない
+          // "options": {
+          //   "avoid_features": ["steps"],
+          // }
           }),
       );
 

@@ -27,9 +27,10 @@ class MapWidget extends ConsumerWidget  {
         }
     final currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
     return FlutterMap(
-      options: const MapOptions(
+      options: MapOptions(
         // アル・プラザ草津(仮)
-        initialCenter: LatLng(35.025438, 135.958355),
+        // initialCenter: LatLng(35.025438, 135.958355),
+        initialCenter: currentLocation,
         //初期ズーム
         initialZoom: 18.0,
       ),
@@ -45,7 +46,7 @@ class MapWidget extends ConsumerWidget  {
         ),
         // LocationLayer(routeModel: routeModel),
         // MaprouteLayer(routeModel: routeModel),
-        LocationLayer(currentLocation: currentLocation),
+        LocationLayer(currentLocation: currentLocation, routeModel: routeModel),
         MaprouteLayer(currentLocation: currentLocation, routeModel: routeModel),
 
       ],
