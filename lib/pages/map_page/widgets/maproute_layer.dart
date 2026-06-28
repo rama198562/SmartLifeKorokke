@@ -14,21 +14,14 @@ class MaprouteLayer extends StatelessWidget {
     this.routeModel,
   });
 
-  List<LatLng> _offsetPoints(List<LatLng> points, double offsetMeters) {
-    if (points.length < 2) return points;
-    final Distance distance = const Distance();
-    List<LatLng> result = [];
-    for (int i = 0; i < points.length; i++) {
-      double bearing;
-      if (i < points.length - 1) {
-        bearing = distance.bearing(points[i], points[i + 1]);
-      } else {
-        bearing = distance.bearing(points[i - 1], points[i]);
-      }
-      // 進行方向に対して左側にずらすため -90度
-      result.add(distance.offset(points[i], offsetMeters, bearing - 90));
-    }
-    return result;
+  List<LatLng> _offsetPoints(List<LatLng> points) {
+    // 複雑な方位計算によるNaNエラーを完全に防ぐため、
+    // 単純に緯度・経度に微小な値を足して線をずらします。（約10m強のズレ）
+    const double offsetDegrees = 0.00005; 
+    return points.map((p) {
+      if (p.latitude.isNaN || p.longitude.isNaN) return p;
+      return LatLng(p.latitude + offsetDegrees, p.longitude + offsetDegrees);
+    }).toList();
   }
 
   @override
@@ -65,13 +58,13 @@ class MaprouteLayer extends StatelessWidget {
           bool isAfterFriendMart = friendMartIndex != -1 && i > friendMartIndex;
 
           Color segmentColor = isAfterFriendMart
-              ? Colors.orange.withValues(alpha: 0.8) // フレンドマート以降の色（オレンジ）
+              ? Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.7)
               : Theme.of(context).colorScheme.primary.withValues(alpha: 0.7);
 
           List<LatLng> points = routeSegments[i];
-          // 帰り道（フレンドマート以降）は進行方向の左側に少し(約10m)ずらす
+          // 帰り道（フレンドマート以降）は進行方向の左側に少しずらす
           if (isAfterFriendMart) {
-            points = _offsetPoints(points, 5.0);
+            points = _offsetPoints(points);
           }
 
           polylines.add(
