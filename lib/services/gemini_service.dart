@@ -3,10 +3,11 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:latlong2/latlong.dart';
 import '../models/route_model.dart'; 
 
 class GeminiService {
-  Future<RouteModel?> generateRouteFromGemini(List<String> selectedCategories) async {
+  Future<RouteModel?> generateRouteFromGemini(List<String> selectedCategories, double distance, LatLng currentLocation) async {
     final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
     if (apiKey.isEmpty) {
       print('エラー: GEMINI_API_KEYが設定されていません');
@@ -65,7 +66,7 @@ class GeminiService {
 // }
 // ''';
 
-    final userRequest = "${selectedCategories.join('、')}に立ち寄るお散歩ルートを提案してください。";
+    final userRequest = "現在地（緯度: ${currentLocation.latitude}, 経度: ${currentLocation.longitude}）から距離${distance}km圏内で、${selectedCategories.join('、')}に立ち寄るお散歩ルートを提案してください。";
 
     try {
       final content = [Content.text('$systemInstruction\n\nユーザーの要望: $userRequest')];

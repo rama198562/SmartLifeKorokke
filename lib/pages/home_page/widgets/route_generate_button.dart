@@ -72,6 +72,8 @@ import 'package:hop_navi/providers/category_grid_provider.dart';
 import 'package:hop_navi/providers/route_loading_provider.dart';
 import 'package:hop_navi/services/gemini_service.dart';
 import 'package:hop_navi/pages/map_page/map_page.dart';
+import 'package:hop_navi/providers/slider_provider.dart';
+import 'package:hop_navi/providers/static_location_provider.dart';
 // import 'package:hop_navi/models/route_model.dart'; // もし必要であればRouteModelをインポート
 
 class RouteGenerateButton extends ConsumerWidget {
@@ -108,6 +110,16 @@ Future<void> _onGenerateRouteRequested(BuildContext context, WidgetRef ref) asyn
     return;
   }
 
+  final distance = ref.read(distanceSliderProvider);
+  final currentLocation = ref.read(staticLocationProvider);
+
+  if (currentLocation == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('現在地が取得できませんでした')),
+    );
+    return;
+  }
+
   // ① 英語のIDを日本語のタイトルに変換する（Geminiに分かりやすくするため）
   const categoryMap = {
     'peak': '公園',
@@ -124,7 +136,7 @@ Future<void> _onGenerateRouteRequested(BuildContext context, WidgetRef ref) asyn
 
   // ② 改良したGeminiServiceを呼び出す
   final geminiService = GeminiService();
-  final routeModel = await geminiService.generateRouteFromGemini(selectedTitles);
+  final routeModel = await geminiService.generateRouteFromGemini(selectedTitles, distance, currentLocation);
 
   // ローディング終了
   ref.read(routeLoadingProvider.notifier).state = false;
