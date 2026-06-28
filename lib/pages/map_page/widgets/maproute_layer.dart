@@ -37,9 +37,11 @@ class MaprouteLayer extends StatelessWidget {
             Polyline(
               points: routePoints,
               strokeWidth: 6.0, 
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
               borderStrokeWidth: 2.0,
-              borderColor: Theme.of(context).colorScheme.secondary
+              borderColor: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
+              strokeCap: StrokeCap.round,
+              strokeJoin: StrokeJoin.round,
             ),
           ],
         );
