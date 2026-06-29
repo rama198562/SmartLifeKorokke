@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hop_navi/services/gemini_service.dart';
 import 'package:hop_navi/services/geocoding_service.dart';
 import 'package:hop_navi/models/route_model.dart';
+import 'package:hop_navi/services/ors_service.dart';
 import 'package:latlong2/latlong.dart';
 
 final routeLoadingProvider = NotifierProvider.autoDispose<RouteLoadingNotifier, bool>(RouteLoadingNotifier.new);
@@ -43,11 +44,25 @@ class RouteLoadingNotifier extends Notifier<bool> {
         await Future.delayed(const Duration(seconds: 1)); // 1秒待機（Nominatim対策）
       }
 
-      // 3. 座標付きのスポットリストを使ってRouteModelを作り直して返す
-      return RouteModel(
+      // 3. 座標付きのスポットリストを使って仮のRouteModelを作る
+      final tempRoute = RouteModel(
         routeName: routeData.routeName,
         description: routeData.description,
         spots: validSpots,
+      );
+
+      // 4. ORSから実際のルート座標と総距離を取得する
+      final orsResult = await OrsApiService.getStrollerRoute(
+        currentLocation: currentLocation,
+        routeModel: tempRoute,
+      );
+
+      return RouteModel(
+        routeName: tempRoute.routeName,
+        description: tempRoute.description,
+        spots: tempRoute.spots,
+        distance: orsResult.distance,
+        segments: orsResult.segments,
       );
 
     } catch (e) {
@@ -57,4 +72,4 @@ class RouteLoadingNotifier extends Notifier<bool> {
       state = false;
     }
   }
-}
+}

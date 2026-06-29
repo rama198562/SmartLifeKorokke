@@ -37,15 +37,21 @@
 //   }
 // }
 
+import 'package:latlong2/latlong.dart';
+
 class RouteModel {
   final String routeName;
   final String description;
   final List<SpotModel> spots;
+  final double distance;
+  final List<List<LatLng>> segments;
 
   RouteModel({
     required this.routeName,
     required this.description,
     required this.spots,
+    this.distance = 0.0,
+    this.segments = const [],
   });
 
   factory RouteModel.fromJson(Map<String, dynamic> json) {
