@@ -7,7 +7,7 @@ import 'package:latlong2/latlong.dart';
 import '../models/route_model.dart'; 
 
 class GeminiService {
-  Future<RouteModel?> generateRouteFromGemini(List<String> selectedCategories, double distance, LatLng currentLocation) async {
+  Future<RouteModel?> generateRouteFromGemini(List<String> selectedCategories, double distance, LatLng currentLocation, String extraText) async {
     final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
     if (apiKey.isEmpty) {
       print('エラー: GEMINI_API_KEYが設定されていません');
@@ -27,6 +27,9 @@ class GeminiService {
 例えば、カフェと公園を指定されていた場合、現在地、カフェ１、公園、フレンドマート、カフェ２，最初にいた現在地のように必ず最初の現在地に戻ってくるようにしてください。
 また、帰りはできるだけ別の道から帰るようにしてください
 そこから経由地のデータを以下のようにjsonで返してください。
+実在する場所とその場所の緯度経度の情報は絶対に嘘をつかないでください
+extraTextでの追加情報はどんなことよりも絶対優先させるようにしてください
+もし、指定された距離の範囲内に平和堂またはフレンドマートまたはアル・プラザが存在しなかった場合は、その旨をdescriptionに記載して含まないルートにしてください
 必ず以下のJSONフォーマットのみを出力してください。
 
 【出力JSONフォーマット】
@@ -66,7 +69,7 @@ class GeminiService {
 // }
 // ''';
 
-    final userRequest = "現在地（緯度: ${currentLocation.latitude}, 経度: ${currentLocation.longitude}）から距離${distance}km圏内で、${selectedCategories.join('、')}に立ち寄るお散歩ルートを提案してください。";
+    final userRequest = "現在地（緯度: ${currentLocation.latitude}, 経度: ${currentLocation.longitude}）から距離${distance}km圏内で、${selectedCategories.join('、')}に立ち寄るお散歩ルートを提案してください。${extraText.isNotEmpty ? '\\n追加の要望: $extraText' : ''}";
 
     try {
       final content = [Content.text('$systemInstruction\n\nユーザーの要望: $userRequest')];

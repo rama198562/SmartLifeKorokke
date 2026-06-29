@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hop_navi/pages/home_page/widgets/category_grid.dart';
 import 'package:hop_navi/pages/home_page/widgets/distance_slider.dart';
 import 'package:hop_navi/pages/home_page/widgets/route_generate_button.dart'; // context.pushを使うために必要
+import 'package:hop_navi/pages/home_page/widgets/text_input_field.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,6 +27,8 @@ class HomeScreen extends StatelessWidget {
               CategoryGrid(),
               SizedBox(height: 24),  
               DistanceSlider(),
+              SizedBox(height: 24),  
+              TextInputField(),
               SizedBox(height: 24),  
               RouteGenerateButton(),
           

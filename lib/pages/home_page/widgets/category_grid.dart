@@ -66,19 +66,19 @@ class CategoryGrid extends ConsumerWidget {
         'icon': Icons.park,
       },
       {
-        'title':'コンビニ',
-        'id':'convenience',
+        'title':'小学校',
+        'id':'primary_school',
         'icon': Icons.storefront,
-      },
-      {
-        'title':'カフェ',
-        'id':'cafe',
-        'icon': Icons.local_cafe,
       },
       {
         'title':'病院',
         'id':'hospital',
         'icon': Icons.local_hospital,
+      },
+      {
+        'title':'幼稚園',
+        'id':'kindergarten',
+        'icon': Icons.local_cafe,
       },
     ];
     final selectedIds = ref.watch(categoryGridProvider);
