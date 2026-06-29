@@ -75,6 +75,7 @@ import 'package:hop_navi/pages/map_page/map_page.dart';
 import 'package:hop_navi/providers/slider_provider.dart';
 import 'package:hop_navi/providers/static_location_provider.dart';
 import 'package:hop_navi/providers/map_location_provider.dart';
+import 'package:hop_navi/providers/text_input_provider.dart';
 import 'package:latlong2/latlong.dart';
 // import 'package:hop_navi/models/route_model.dart'; // もし必要であればRouteModelをインポート
 
@@ -113,6 +114,7 @@ Future<void> _onGenerateRouteRequested(BuildContext context, WidgetRef ref) asyn
   }
 
   final distance = ref.read(distanceSliderProvider);
+  final extraText = ref.read(textInputProvider);
   // ローディング開始
   ref.read(routeLoadingProvider.notifier).state = true;
 
@@ -152,7 +154,7 @@ Future<void> _onGenerateRouteRequested(BuildContext context, WidgetRef ref) asyn
 
   // ② 改良したGeminiServiceを呼び出す
   final geminiService = GeminiService();
-  final routeModel = await geminiService.generateRouteFromGemini(selectedTitles, distance, currentLocation);
+  final routeModel = await geminiService.generateRouteFromGemini(selectedTitles, distance, currentLocation, extraText);
 
   // ローディング終了
   ref.read(routeLoadingProvider.notifier).state = false;
