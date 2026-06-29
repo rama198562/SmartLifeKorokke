@@ -76,10 +76,11 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeName = routeModel?.routeName ?? 'お散歩マップ';
+    final description = routeModel?.description ?? '';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(routeName),
+        title: const Text('ルート案内'),
         actions: [
           IconButton(
             icon: const Icon(Icons.list_alt),
@@ -88,15 +89,41 @@ class DetailsScreen extends StatelessWidget {
           ),
         ],
       ), 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(       
-              child: MapWidget(routeModel: routeModel),
+      body: Column(
+        children: [
+          // タイトルと説明文をしっかり見せるためのエリア
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  routeName,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                if (description.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ],
             ),
-          ],
-        ),
+          ),
+          Expanded(       
+            child: MapWidget(routeModel: routeModel),
+          ),
+        ],
       ),
     );
   }

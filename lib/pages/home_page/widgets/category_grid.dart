@@ -80,11 +80,6 @@ class CategoryGrid extends ConsumerWidget {
         'id':'hospital',
         'icon': Icons.local_hospital,
       },
-      {
-        'title':'a',
-        'id':'hospital',
-        'icon': Icons.local_hospital,
-      },
     ];
     final selectedIds = ref.watch(categoryGridProvider);
     return Column(

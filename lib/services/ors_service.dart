@@ -6,7 +6,7 @@ import 'package:hop_navi/models/route_model.dart';
 
 class OrsApiService {
   // ORSから車椅子ルートを取得
-  static Future<List<LatLng>> getStrollerRoute({
+  static Future<List<List<LatLng>>> getStrollerRoute({
     required LatLng currentLocation,
     RouteModel? routeModel,
   }) async {
@@ -39,18 +39,29 @@ class OrsApiService {
         },
         body: jsonEncode({
           "coordinates": coordinates,
-          //階段除外ただし、距離によってうまく実行できない
-          // "options": {
-          //   "avoid_features": ["steps"],
-          // }
           }),
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final List<dynamic> routeCoords = data['features'][0]['geometry']['coordinates'];
+        final List<dynamic>? wayPointsDynamic = data['features'][0]['properties']['way_points'];
+        
+        List<int> wayPoints = [0, routeCoords.length - 1];
+        if (wayPointsDynamic != null) {
+          wayPoints = wayPointsDynamic.map((e) => e as int).toList();
+        }
 
-        return routeCoords.map((coord) => LatLng(coord[1], coord[0])).toList();
+        List<List<LatLng>> segments = [];
+        for (int i = 0; i < wayPoints.length - 1; i++) {
+          int startIdx = wayPoints[i];
+          int endIdx = wayPoints[i + 1];
+          // endIdx is inclusive for the segment, so we take up to endIdx + 1
+          final segmentCoords = routeCoords.sublist(startIdx, endIdx + 1);
+          segments.add(segmentCoords.map((coord) => LatLng(coord[1], coord[0])).toList());
+        }
+
+        return segments;
       } else {
         print('ORSエラー: ${response.body}');
         return [];
