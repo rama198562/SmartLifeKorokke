@@ -24,6 +24,9 @@ class OrsApiService {
       return [];
     }
 
+    // ゴール地点（スタートと同じ現在地に戻る）
+    coordinates.add([currentLocation.longitude, currentLocation.latitude]);
+
     final apiKey = dotenv.env['ORS_API_KEY'] ?? '';
     if (apiKey.isEmpty) return [];
     // 車椅子モード

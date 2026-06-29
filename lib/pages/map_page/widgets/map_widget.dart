@@ -3,9 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hop_navi/pages/map_page/widgets/location_layer.dart';
 import 'package:hop_navi/pages/map_page/widgets/maproute_layer.dart';
-import 'package:hop_navi/providers/map_location_provider.dart';
 import 'package:hop_navi/providers/static_location_provider.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:hop_navi/models/route_model.dart'; 
 
 class MapWidget extends ConsumerWidget  {

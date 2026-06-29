@@ -42,11 +42,12 @@ class MaprouteLayer extends StatelessWidget {
           return PolylineLayer(polylines: const <Polyline>[]); 
         }
 
-        // フレンドマートのインデックスを探す
+        // フレンドマート等のインデックスを探す
         int friendMartIndex = -1;
         if (routeModel != null) {
           for (int i = 0; i < routeModel!.spots.length; i++) {
-            if (routeModel!.spots[i].name.contains('フレンドマート')) {
+            final name = routeModel!.spots[i].name;
+            if (name.contains('フレンドマート') || name.contains('平和堂') || name.contains('アル・プラザ')) {
               friendMartIndex = i;
               break;
             }
