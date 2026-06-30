@@ -27,8 +27,8 @@ class OverpassService {
       );
       out center;
     ''';
-
-    final url = Uri.parse('https://lz4.overpass-api.de/api/interpreter');
+    final url = Uri.parse('https://overpass.kumi.systems/api/interpreter');
+    // final url = Uri.parse('https://lz4.overpass-api.de/api/interpreter');
 
     try {
       final response = await http.post(
