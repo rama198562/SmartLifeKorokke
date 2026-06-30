@@ -76,7 +76,12 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeName = routeModel?.routeName ?? 'お散歩マップ';
-    final description = routeModel?.description ?? '';
+    var description = routeModel?.description ?? '';
+
+    if (routeModel != null && routeModel!.distance > 0) {
+      final distanceKm = (routeModel!.distance / 1000).toStringAsFixed(1);
+      description = '総距離: 約$distanceKm km\n$description';
+    }
 
     return Scaffold(
       appBar: AppBar(

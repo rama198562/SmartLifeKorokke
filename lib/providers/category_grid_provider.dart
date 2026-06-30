@@ -7,12 +7,12 @@ class CategoryGridNotifier extends Notifier<Set<String>> {
     return {};
   }
 
-  void toggleCategory(String CategoryId){
+  void toggleCategory(String categoryId){
     final currentSet = Set<String>.from(state);
-    if(currentSet.contains(CategoryId)){
-      currentSet.remove(CategoryId);
+    if(currentSet.contains(categoryId)){
+      currentSet.remove(categoryId);
     }else{
-      currentSet.add(CategoryId);
+      currentSet.add(categoryId);
     }
     state = currentSet;
   }

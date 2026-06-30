@@ -43,6 +43,7 @@ dependencies:
   location: ^8.0.1
   flutter_dotenv: ^6.0.1
   http: ^1.6.0
+  provider: ^6.1.5+1
   # riverpod_annotation: ^4.0.3
 
 dev_dependencies:
