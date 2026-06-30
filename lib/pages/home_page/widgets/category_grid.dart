@@ -62,13 +62,13 @@ class CategoryGrid extends ConsumerWidget {
     final List<Map<String, dynamic>> categories = [
       {
         'title':'公園',
-        'id':'peak', 
+        'id':'park', 
         'icon': Icons.park,
       },
       {
         'title':'小学校',
         'id':'primary_school',
-        'icon': Icons.storefront,
+        'icon': Icons.school,
       },
       {
         'title':'病院',
@@ -78,7 +78,7 @@ class CategoryGrid extends ConsumerWidget {
       {
         'title':'幼稚園',
         'id':'kindergarten',
-        'icon': Icons.local_cafe,
+        'icon': Icons.toys,
       },
     ];
     final selectedIds = ref.watch(categoryGridProvider);

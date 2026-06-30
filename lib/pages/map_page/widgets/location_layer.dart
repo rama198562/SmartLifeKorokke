@@ -30,10 +30,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:hop_navi/widgets/current_location.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:hop_navi/models/route_model.dart'; // 👈 RouteModelをインポート
+import 'package:hop_navi/models/route_model.dart';
 
 class LocationLayer extends StatelessWidget {
-  final RouteModel? routeModel; // 👈 データを受け取る
+  final RouteModel? routeModel; //  データを受け取る
 
   // const LocationLayer({super.key, this.routeModel});
   final LatLng currentLocation;
@@ -58,13 +58,13 @@ class LocationLayer extends StatelessWidget {
       currentLocationMarker(context, currentLocation),
     ];
 
-    // 💡 Geminiが考えたスポットの数だけマーカーを追加する！
+    // スポットの数だけマーカーを追加
     if (routeModel != null && routeModel!.spots.isNotEmpty) {
       for (var spot in routeModel!.spots) {
         markers.add(
           Marker(
-            width: 40.0,
-            height: 40.0,
+            width: 150.0, // テキストが入るように広げる
+            height: 80.0,
             point: LatLng(spot.latitude, spot.longitude),
             child: GestureDetector(
               onTap: () {
@@ -90,13 +90,36 @@ class LocationLayer extends StatelessWidget {
                   },
                 );
               },
-              child: Icon(
-                Icons.location_on,
-                color: Theme.of(context).colorScheme.primary,
-                size: 50,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 40,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.9), 
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
+                    ),
+                    child: Text(
+                      spot.name,
+                      style: TextStyle(
+                        fontSize: 12, 
+                        fontWeight: FontWeight.bold, 
+                        color: Theme.of(context).colorScheme.onPrimary, 
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
             ),
-            rotate: true,
           ),
         );
       }

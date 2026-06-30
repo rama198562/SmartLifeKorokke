@@ -15,14 +15,19 @@ class RouteGenerateButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Providerから状態を監視
     final isLoading = ref.watch(routeLoadingProvider);
+    final currentLocation = ref.watch(staticLocationProvider);
 
     return ElevatedButton(
       onPressed: isLoading ? null : () async {
-        // ボタンが押されたら状態を取得してProviderのロジックを実行！
+        print('=== ルート生成ボタンが押されました ===');
         final categories = ref.read(categoryGridProvider).toList();
         final distance = ref.read(distanceSliderProvider);
-        final currentLocation = ref.read(staticLocationProvider);
         final extraText = ref.read(textInputProvider);
+
+        print('カテゴリー: $categories');
+        print('距離: $distance');
+        print('現在地: $currentLocation');
+        print('追加テキスト: $extraText');
 
         if (currentLocation == null) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -35,13 +40,18 @@ class RouteGenerateButton extends ConsumerWidget {
           categories, distance, currentLocation, extraText
         );
 
-        // 無事にルートが作れたらマップ画面へ遷移！
-        if (routeModel != null && context.mounted) {
+        if (!context.mounted) return;
+
+        if (routeModel != null) {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => DetailsScreen(routeModel: routeModel),
             ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('ルートの生成に失敗しました。条件を変えて再度お試しください。')),
           );
         }
       },
